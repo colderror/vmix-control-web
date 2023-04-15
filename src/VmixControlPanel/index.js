@@ -30,7 +30,7 @@ const VmixControlPanel = () => {
 
   console.log(window.location.hostname);
 
-  let url = window.location.hostname === 'localhost' ? 'http://localhost:4001' : 'https://vmix-backend.herokuapp.com/';
+  let url = window.location.hostname === 'localhost' ? 'http://localhost:4001' : 'https://vmix-backend.herokuapp.com';
 
   const fetchInputs = useCallback(async () => {
     try {
