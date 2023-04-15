@@ -10,10 +10,11 @@ import { ConnectionContext } from "../App";
 const Root = () => {
     const [connected, setConnected] = useContext(ConnectionContext)
     
+    let url = window.location.hostname === 'localhost' ? 'http://localhost:4001' : 'https://vmix-backend.herokuapp.com/';
     const handleConnect = ({ipAddress, port, username, password}) => {
         console.log("Connecting to vMix API")
         axios
-        .post('http://localhost:3001/connect', { ipAddress, port, username, password })
+        .post(`${url}/connect`, { ipAddress, port, username, password })
         .then((response) => {
             console.log("Connected to vMix API")
             console.log("response", response)

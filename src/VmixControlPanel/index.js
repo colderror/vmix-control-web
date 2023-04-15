@@ -28,9 +28,13 @@ const VmixControlPanel = () => {
     setSelectedInput(inputNumber);
   };
 
+  console.log(window.location.hostname);
+
+  let url = window.location.hostname === 'localhost' ? 'http://localhost:4001' : 'https://vmix-backend.herokuapp.com/';
+
   const fetchInputs = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:3001/inputs');
+      const response = await axios.get(`${url}/inputs`);
       setInputs(response.data);
     } catch (error) {
       console.error('Failed to fetch inputs', error);
@@ -40,7 +44,7 @@ const VmixControlPanel = () => {
 
   const fadeInput = async (inputNumber) => {
     try {
-      const response = await axios.post('http://localhost:3001/fade-input', { inputNumber });
+      const response = await axios.post(`${url}/fade-input`, { inputNumber });
       console.log(response.data);
     } catch (error) {
       console.error('Failed to fade input', error);
@@ -50,7 +54,7 @@ const VmixControlPanel = () => {
 
   const fadeOverlay = async (overlayNumber) => {
     try {
-        const response = await axios.post('http://localhost:3001/fade-overlay', { overlayNumber });
+        const response = await axios.post(`${url}/fade-overlay`, { overlayNumber });
         console.log(response.data);
     } catch (error) {
         console.error('Failed to fade overlay', error);
@@ -58,9 +62,19 @@ const VmixControlPanel = () => {
     }
   };
 
+  const removeOverlay = async (overlayNumber) => {
+    try {
+        const response = await axios.post(`${url}/remove-overlay`, { overlayNumber });
+        console.log(response.data);
+    } catch (error) {
+        console.error('Failed to remove overlay', error);
+        return `Failed to remove overlay ${error}`
+    }
+  };
+
   const startStream = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/start-stream');
+      const response = await axios.post(`${url}/start-stream`);
       console.log(response.data);
     } catch (error) {
       console.error('Failed to start streaming', error);
@@ -70,7 +84,7 @@ const VmixControlPanel = () => {
 
   const stopStream = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/stop-stream');
+      const response = await axios.post(`${url}/stop-stream`);
       console.log(response.data);
     } catch (error) {
       console.error('Failed to stop streaming', error);
@@ -80,7 +94,7 @@ const VmixControlPanel = () => {
 
   const getStreamStatus = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/stream-status');
+      const response = await axios.get(`${url}/stream-status`);
       console.log(response.data);
       setStreaming(response.data.streaming);
     } catch (error) {
@@ -91,7 +105,7 @@ const VmixControlPanel = () => {
 
   const getActiveInput = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/active-input');
+        const response = await axios.get(`${url}/active-input`);
         setActiveInput(response.data)
     } catch (error) {
         console.error('Failed to get active inputs', error);
