@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { createContext, useEffect, useState } from 'react';
+import axios from 'axios';
+import './App.scss';
+import VmixControlPanel from './VmixControlPanel';
+import ConnectionPage from './ConnectionPage';
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import Documentation from './Documentation';
+import SecuredRoute from './router/SecuredRoute';
+import PrivateRoute from './router/SecuredRoute';
+import Root from './router';
 
-function App() {
+export const ConnectionContext = createContext();
+
+const App = () => {
+  const [connected, setConnected] = useState(false);
+
+  useEffect(() => {
+    setConnected(false);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ConnectionContext.Provider value={[ connected, setConnected ]}>
+      <Root/>
+    </ConnectionContext.Provider>
   );
+  
 }
 
 export default App;
